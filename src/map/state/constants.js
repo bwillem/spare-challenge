@@ -1,0 +1,1 @@
+export const GET_BUS_LOCATIONS = 'GET_BUS_LOCATIONS'
