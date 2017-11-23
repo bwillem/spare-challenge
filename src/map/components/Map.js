@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import ReactMapGL, { NavigationControl } from 'react-map-gl';
 import { onChangeViewport } from 'redux-map-gl';
-
-const ACCESS_TOKEN = 'pk.eyJ1IjoiYndpbGxlbSIsImEiOiJjamFicHl3ZXAwMmh2MndsZGQwaHNpbTByIn0.hX-QcmRvsLJb3dqTqu0nQw';
+import { MAP_ACCESS_TOKEN } from '../../core/constants';
 
 export default class Map extends Component {
 
@@ -17,6 +16,7 @@ export default class Map extends Component {
 
   fitMapToViewport() {
     const { mapState, onChangeViewport } = this.props
+
     const newMapState = {
       ...mapState,
       width: window.innerWidth,
@@ -32,7 +32,7 @@ export default class Map extends Component {
       <ReactMapGL
         { ...mapState }
         mapStyle='mapbox://styles/mapbox/streets-v10'
-        mapboxApiAccessToken={ ACCESS_TOKEN }
+        mapboxApiAccessToken={ MAP_ACCESS_TOKEN }
         onViewportChange={onChangeViewport}
       >
         <div style={{
