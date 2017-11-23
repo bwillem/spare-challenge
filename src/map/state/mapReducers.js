@@ -4,7 +4,11 @@ import {
   BUS_LOCATIONS_ERROR,
 } from './constants.js';
 
-export default (state, action) => {
+const initialState = {
+  buses: [],
+}
+
+export default (state = initialState, action) => {
   switch (action.type) {
     case BUS_LOCATIONS_SUCCESS:
       return action.payload
