@@ -4,13 +4,10 @@ const initialState = {
   buses: [],
 }
 
-const updateBuses = (state, buses) => {
-  debugger;
-  return {
-    ...state,
-    buses,
-  }
-}
+const updateBuses = (state, buses) => ({
+  ...state,
+  buses,
+})
 
 export default (state, action) => {
   switch (action.type) {

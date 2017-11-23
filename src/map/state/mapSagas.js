@@ -5,9 +5,16 @@ import * as actionTypes from './constants';
 function* fetchBuses(action) {
   try {
     const res = yield call(Api.fetchBuses) 
-    yield put({type: actionTypes.BUS_LOCATIONS_SUCCESS, payload: res})
+    yield put({
+      type: actionTypes.BUS_LOCATIONS_SUCCESS,
+      payload: res,
+      fetching: false,
+    })
   } catch (e) {
-    yield put({type: actionTypes.BUS_LOCATIONS_ERROR, error: e.message})
+    yield put({
+      type: actionTypes.BUS_LOCATIONS_ERROR,
+      error: e.message,
+    })
   }
 }
 
