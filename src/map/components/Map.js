@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactMapGL, { NavigationControl } from 'react-map-gl';
 import styled from 'styled-components';
-import { MAP_ACCESS_TOKEN } from '../../core/constants';
+import { MAP_ACCESS_TOKEN, MAP_STYLE } from '../../core/constants';
 import Dot from './Dot';
 
 const NavControlStyled = styled(NavigationControl)`
@@ -31,14 +31,24 @@ const RefreshBtnStyled = styled.button`
   box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.10);
   padding: 8px 16px;
   margin-bottom: 16px;
+  cursor: pointer;
+  &:hover {
+    background: rgba(0,0,0,0.1)
+  }
 `;
 
 export default class Map extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isUserDragging: false,
+    }
+  }
 
   componentDidMount() {
+    this.fitMapToViewport();
     this.props.requestBuses();
     window.addEventListener('resize', this.fitMapToViewport.bind(this));
-    this.fitMapToViewport();
   }
 
   componentWillUnmount() {
@@ -55,34 +65,37 @@ export default class Map extends Component {
     })
   }
 
-  renderMarkers() {
-    return this.props.buses.map((bus) => <Dot 
-      key={bus.VehicleNo}  
-      bus={bus} />)
-  }
+  // renderMarkers() {
+  //   setTimeout(() => this.props.requestBuses(), 600)
+  //   return this.props.buses.map((bus) => <Dot 
+  //     key={bus.VehicleNo}  
+  //     bus={bus} />)
+  // }
 
   render() {
+    console.log('maprender', this.state.isUserDragging);
     const { 
       mapState, 
       onChangeViewport, 
       requestBuses, 
-      fetching,
       buses,
     } = this.props;
 
     return (  
       <ReactMapGL
+        // onDragEnter={() => { console.log('click'); this.setState({isUserDragging: true}); } } 
+        // onDragEnd={() => { console.log('mouseup'); this.setState({isUserDragging: false}); }}
         { ...mapState }
-        mapStyle='mapbox://styles/mapbox/streets-v10'
+        mapStyle={MAP_STYLE}
         mapboxApiAccessToken={MAP_ACCESS_TOKEN}
         onViewportChange={onChangeViewport} >
 
-        <NavControlStyled>
-          <NavigationControl onViewportChange={onChangeViewport} />
-        </NavControlStyled>
+        <NavControlStyled onViewportChange={onChangeViewport} />
         { 
           buses ?
-          this.renderMarkers() :
+          <DotDrawer 
+            buses={buses}
+            pauseRerender={this.state.isUserDragging}/> :
           null 
         }
 
@@ -96,13 +109,21 @@ export default class Map extends Component {
           </p>
           <RefreshBtnStyled 
             onClick={requestBuses} >
-             { fetching ?
-                `working...` :
-                `refrefasdsh` 
-              }
+              refresh
           </RefreshBtnStyled>
          </LegendStyled>
       </ReactMapGL>
     )
+  }
+}
+class DotDrawer extends Component {
+  shouldComponentUpdate() {
+    return this.props.pauseRerender;
+  }
+  render() {
+    // setTimeout(() => this.props.requestBuses(), 600)
+    return this.props.buses.map((bus) => <Dot 
+      key={bus.VehicleNo}  
+      bus={bus} />)
   }
 }

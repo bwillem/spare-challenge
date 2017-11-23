@@ -9,7 +9,7 @@ const updateBuses = (state, buses) => ({
   buses,
 })
 
-export default (state, action) => {
+export default (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.BUS_LOCATIONS_SUCCESS:
       return updateBuses(state, action.payload.body) 

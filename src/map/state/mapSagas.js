@@ -8,7 +8,6 @@ function* fetchBuses(action) {
     yield put({
       type: actionTypes.BUS_LOCATIONS_SUCCESS,
       payload: res,
-      fetching: false,
     })
   } catch (e) {
     yield put({
