@@ -2,6 +2,13 @@ import React, { Component } from 'react';
 import ReactMapGL, { NavigationControl } from 'react-map-gl';
 import { MAP_ACCESS_TOKEN } from '../../core/constants';
 
+const navControlStyles = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  padding: 16,
+}
+
 export default class Map extends Component {
 
   componentDidMount() {
@@ -36,12 +43,7 @@ export default class Map extends Component {
         mapboxApiAccessToken={ MAP_ACCESS_TOKEN }
         onViewportChange={onChangeViewport}
       >
-        <div style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          padding: 16,
-        }}>
+        <div style={navControlStyles}>
           <NavigationControl onViewportChange={onChangeViewport} />
         </div>
       </ReactMapGL>
