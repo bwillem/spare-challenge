@@ -10,6 +10,7 @@
     "react-scripts": "1.0.17",
     "redux": "^3.7.2",
     "redux-map-gl": "^0.1.0",
+    "redux-saga": "^0.16.0",
     "superagent": "^3.8.1"
   },
   "scripts": {

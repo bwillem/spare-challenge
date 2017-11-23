@@ -1,5 +1,6 @@
-import { connect } from 'react-redux';
-import { onChangeViewport } from 'redux-map-gl';
+import { connect } from 'react-redux'
+import { onChangeViewport } from 'redux-map-gl'
+import { requestBuses } from '../state/mapActionCreators'
 import Map from './Map';
 
 const mapStateToProps = (state) => {
@@ -10,5 +11,6 @@ const mapStateToProps = (state) => {
 } 
 
 export default connect(mapStateToProps, {
+  requestBuses,
   onChangeViewport,
 })(Map);

@@ -1,18 +1,22 @@
-import { 
-  BUS_LOCATIONS_GET,
-  BUS_LOCATIONS_SUCCESS,
-  BUS_LOCATIONS_ERROR,
-} from './constants.js';
+import * as actionTypes from './constants.js';
 
 const initialState = {
   buses: [],
 }
 
-export default (state = initialState, action) => {
+const updateBuses = (state, buses) => {
+  debugger;
+  return {
+    ...state,
+    buses,
+  }
+}
+
+export default (state, action) => {
   switch (action.type) {
-    case BUS_LOCATIONS_SUCCESS:
-      return action.payload
-    case BUS_LOCATIONS_ERROR:
+    case actionTypes.BUS_LOCATIONS_SUCCESS:
+      return updateBuses(state, action.payload.body) 
+    case actionTypes.BUS_LOCATIONS_ERROR:
       return action.error
     default:
       return state

@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import ReactMapGL, { NavigationControl } from 'react-map-gl';
-import { onChangeViewport } from 'redux-map-gl';
 import { MAP_ACCESS_TOKEN } from '../../core/constants';
 
 export default class Map extends Component {
 
   componentDidMount() {
+    this.props.requestBuses();
+    console.log(this.props);
     window.addEventListener('resize', this.fitMapToViewport.bind(this));
     this.fitMapToViewport();
   }
