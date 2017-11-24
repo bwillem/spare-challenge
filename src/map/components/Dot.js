@@ -2,12 +2,13 @@ import React from 'react'
 import { Marker } from 'react-map-gl'
 
 export default props => {
+  const { VehicleNo, Longitude, Latitude } = props.bus
   return (
     <Marker 
-      key={props.bus.VehicleNo}
-      longitude={props.bus.Longitude}
-      latitude={props.bus.Latitude} >
-      <span>.</span>
+      key={VehicleNo}
+      longitude={Longitude}
+      latitude={Latitude} >
+        <span>•</span>
     </Marker>
   );
 }

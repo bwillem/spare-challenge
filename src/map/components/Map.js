@@ -65,13 +65,6 @@ export default class Map extends Component {
     })
   }
 
-  // renderMarkers() {
-  //   setTimeout(() => this.props.requestBuses(), 600)
-  //   return this.props.buses.map((bus) => <Dot 
-  //     key={bus.VehicleNo}  
-  //     bus={bus} />)
-  // }
-
   render() {
     console.log('maprender', this.state.isUserDragging);
     const { 
@@ -82,47 +75,53 @@ export default class Map extends Component {
     } = this.props;
 
     return (  
-      <ReactMapGL
-        // onDragEnter={() => { console.log('click'); this.setState({isUserDragging: true}); } } 
-        // onDragEnd={() => { console.log('mouseup'); this.setState({isUserDragging: false}); }}
-        { ...mapState }
-        mapStyle={MAP_STYLE}
-        mapboxApiAccessToken={MAP_ACCESS_TOKEN}
-        onViewportChange={onChangeViewport} >
+      <div 
+        onMouseDownCapture={() => { this.setState(state => ({isUserDragging: true})) }}
+        onMouseUpCapture={() => { this.setState(state => ({isUserDragging: false})) }}>
 
-        <NavControlStyled onViewportChange={onChangeViewport} />
-        { 
-          buses ?
-          <DotDrawer 
-            buses={buses}
-            pauseRerender={this.state.isUserDragging}/> :
-          null 
-        }
+        <ReactMapGL
+          { ...mapState }
+          mapStyle={MAP_STYLE}
+          mapboxApiAccessToken={MAP_ACCESS_TOKEN}
+          onViewportChange={onChangeViewport} >
 
-        <LegendStyled>
-          <p>Active buses: 
-            { 
-              buses ?
-              ' ' + buses.length :
-              ' ...'
-            }
-          </p>
-          <RefreshBtnStyled 
-            onClick={requestBuses} >
-              refresh
-          </RefreshBtnStyled>
-         </LegendStyled>
-      </ReactMapGL>
+          <NavControlStyled onViewportChange={onChangeViewport} />
+          { 
+            buses ?
+            <DotDrawer 
+              buses={buses}
+              requestBuses={requestBuses}
+              pauseRerender={this.state.isUserDragging}/> :
+            null 
+          }
+
+          <LegendStyled>
+            <p>Active buses: 
+              { 
+                buses ?
+                ' ' + buses.length :
+                ' ...'
+              }
+            </p>
+            <RefreshBtnStyled 
+              onClick={requestBuses} >
+                refresh
+            </RefreshBtnStyled>
+          </LegendStyled>
+        </ReactMapGL>
+      </div>
     )
   }
 }
+
 class DotDrawer extends Component {
-  shouldComponentUpdate() {
-    return this.props.pauseRerender;
+  shouldComponentUpdate(nextProp, nextState) {
+    return !nextProp.pauseRerender;
   }
   render() {
-    // setTimeout(() => this.props.requestBuses(), 600)
-    return this.props.buses.map((bus) => <Dot 
+    setTimeout(() => this.props.requestBuses(), 600)
+    return this.props.buses.map((bus) => <Dot
+      isVisible={!this.props.pauseRerender}
       key={bus.VehicleNo}  
       bus={bus} />)
   }
