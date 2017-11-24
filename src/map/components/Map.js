@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import { MAP_ACCESS_TOKEN, MAP_STYLE } from '../../core/constants';
 import Dot from './Dot';
 
+const FETCH_INTERVAL = 600
+
 const NavControlStyled = styled(NavigationControl)`
   position: absolute;
   top: 0;
@@ -104,7 +106,7 @@ class DotDrawer extends Component {
     return !nextProp.pauseRerender;
   }
   render() {
-    setTimeout(() => this.props.requestBuses(), 600)
+    setTimeout(() => this.props.requestBuses(), FETCH_INTERVAL)
     return this.props.buses.map((bus) => <Dot
       isVisible={!this.props.pauseRerender}
       key={bus.VehicleNo}  
