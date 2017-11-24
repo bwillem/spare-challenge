@@ -7,8 +7,10 @@ export default props => {
     <Marker 
       key={VehicleNo}
       longitude={Longitude}
+      offsetLeft={-2}
+      offsetTop={-10}
       latitude={Latitude} >
-        <span>•</span>
+        <span style={{fontSize: 10}}>•</span>
     </Marker>
   );
 }
