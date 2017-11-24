@@ -14,7 +14,7 @@ export default (state = initialState, action) => {
     case actionTypes.BUS_LOCATIONS_SUCCESS:
       return updateBuses(state, action.payload.body) 
     case actionTypes.BUS_LOCATIONS_ERROR:
-      return action.error
+      return { ...state, error: action.error}
     default:
       return state
   }

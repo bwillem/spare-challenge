@@ -67,7 +67,9 @@ export default class Map extends Component {
     return (  
       <div 
         onMouseDownCapture={() => { this.setState(state => ({isUserDragging: true})) }}
-        onMouseUpCapture={() => { this.setState(state => ({isUserDragging: false})) }}>
+        onMouseUpCapture={() => { this.setState(state => ({isUserDragging: false})) }}
+        onTouchStart={() => { this.setState(state => ({isUserDragging: true})) }}
+        onTouchEnd={() => { this.setState(state => ({isUserDragging: false})) }}>
 
         <ReactMapGL
           { ...mapState }
