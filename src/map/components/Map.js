@@ -9,7 +9,7 @@ const NavControlStyled = styled(NavigationControl)`
   top: 0;
   left: 0;
   margin: 16px;
-`;
+`
 
 const LegendStyled = styled.div `
   display:none;
@@ -25,17 +25,6 @@ const LegendStyled = styled.div `
     max-width: 10em;
   }
 `
-const RefreshBtnStyled = styled.button`
-  border-radius: 32px;
-  border: 1px solid black;
-  box-shadow: 0px 0px 0px 2px rgba(0,0,0,0.10);
-  padding: 8px 16px;
-  margin-bottom: 16px;
-  cursor: pointer;
-  &:hover {
-    background: rgba(0,0,0,0.1)
-  }
-`;
 
 export default class Map extends Component {
   constructor(props) {
@@ -66,7 +55,6 @@ export default class Map extends Component {
   }
 
   render() {
-    console.log('maprender', this.state.isUserDragging);
     const { 
       mapState, 
       onChangeViewport, 
@@ -86,6 +74,7 @@ export default class Map extends Component {
           onViewportChange={onChangeViewport} >
 
           <NavControlStyled onViewportChange={onChangeViewport} />
+          
           { 
             buses ?
             <DotDrawer 
@@ -103,10 +92,6 @@ export default class Map extends Component {
                 ' ...'
               }
             </p>
-            <RefreshBtnStyled 
-              onClick={requestBuses} >
-                refresh
-            </RefreshBtnStyled>
           </LegendStyled>
         </ReactMapGL>
       </div>

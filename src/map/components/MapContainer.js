@@ -1,7 +1,7 @@
 import { connect } from 'react-redux'
 import { onChangeViewport } from 'redux-map-gl'
 import { requestBuses } from '../state/mapActionCreators'
-import Map from './Map';
+import Map from './Map'
 
 const mapStateToProps = state => {
   const mapState = state.map.viewport.toJS();
@@ -9,10 +9,10 @@ const mapStateToProps = state => {
   return {
     mapState,
     buses,
-  };
+  }
 } 
 
 export default connect(mapStateToProps, {
   requestBuses,
   onChangeViewport,
-})(Map);
+})(Map)
