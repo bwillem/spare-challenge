@@ -10,7 +10,7 @@ export default combineReducers({
     zoom: 10.333,
     bearing: 0,
     pitch: 0,
-    width: 500,
-    height: 500,
+    width: 0,
+    height: 0,
   }),
 })

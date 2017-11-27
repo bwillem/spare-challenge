@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import ReactMapGL, { NavigationControl } from 'react-map-gl';
-import styled from 'styled-components';
-import { MAP_ACCESS_TOKEN, MAP_STYLE } from '../../core/constants';
-import Dot from './Dot';
-
-const FETCH_INTERVAL = 600
+import React, { Component } from 'react'
+import ReactMapGL, { NavigationControl } from 'react-map-gl'
+import PropTypes from 'prop-types'
+import styled from 'styled-components'
+import { MAP_ACCESS_TOKEN, MAP_STYLE } from '../../core/constants'
+import DotRenderer from './DotRenderer'
 
 const NavControlStyled = styled(NavigationControl)`
   position: absolute;
@@ -34,6 +33,10 @@ export default class Map extends Component {
     this.state = {
       isUserDragging: false,
     }
+  }
+
+  static PropTypes = {
+    buses: PropTypes.array.isRequired,
   }
 
   componentDidMount() {
@@ -66,8 +69,8 @@ export default class Map extends Component {
 
     return (  
       <div 
-        onMouseDownCapture={() => { this.setState(state => ({isUserDragging: true})) }}
-        onMouseUpCapture={() => { this.setState(state => ({isUserDragging: false})) }}
+        onMouseDown={() => { this.setState(state => ({isUserDragging: true})) }}
+        onMouseUp={() => { this.setState(state => ({isUserDragging: false})) }}
         onTouchStart={() => { this.setState(state => ({isUserDragging: true})) }}
         onTouchEnd={() => { this.setState(state => ({isUserDragging: false})) }}>
 
@@ -81,10 +84,10 @@ export default class Map extends Component {
           
           { 
             buses ?
-            <DotDrawer 
+            <DotRenderer 
               buses={buses}
               requestBuses={requestBuses}
-              pauseRerender={this.state.isUserDragging}/> :
+              pauseRerender={this.state.isUserDragging} /> :
             null 
           }
 
@@ -100,18 +103,5 @@ export default class Map extends Component {
         </ReactMapGL>
       </div>
     )
-  }
-}
-
-class DotDrawer extends Component {
-  shouldComponentUpdate(nextProp, nextState) {
-    return !nextProp.pauseRerender;
-  }
-  render() {
-    setTimeout(() => this.props.requestBuses(), FETCH_INTERVAL)
-    return this.props.buses.map((bus) => <Dot
-      isVisible={!this.props.pauseRerender}
-      key={bus.VehicleNo}  
-      bus={bus} />)
   }
 }
